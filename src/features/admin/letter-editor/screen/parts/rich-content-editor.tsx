@@ -1,7 +1,28 @@
+import { useEffect, useRef } from 'react'
 import { Trash2, Quote, GripVertical, Music } from '@ui/icons'
 import type { RichContentBlock } from '@shared/types'
 import { MediaUploader } from './media-uploader'
 import { buildContentBlock } from '../../helpers/build-content-block'
+
+function AutoResizeTextarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  const ref = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${el.scrollHeight}px`
+  }, [props.value])
+
+  return (
+    <textarea
+      {...props}
+      ref={ref}
+      rows={1}
+      style={{ ...props.style, overflow: 'hidden' }}
+    />
+  )
+}
 
 interface RichContentEditorProps {
   blocks: RichContentBlock[]
@@ -78,11 +99,10 @@ function BlockEditor({
       <div className="relative group flex gap-3">
         <div className="w-1 bg-brand-yellow rounded-full shrink-0" />
         <div className="flex-1">
-          <textarea
+          <AutoResizeTextarea
             value={block.content}
             onChange={(e) => onUpdate({ ...block, content: e.target.value })}
             placeholder="A quote or verse…"
-            rows={2}
             className="w-full text-base italic text-romantic-brown dark:text-dark-text bg-transparent outline-none resize-none placeholder:text-romantic-brown-muted/60 leading-relaxed"
           />
         </div>
@@ -97,11 +117,10 @@ function BlockEditor({
   return (
     <div className="relative group flex gap-2 items-start">
       <GripVertical size={16} className="text-romantic-brown-muted/40 mt-2.5 shrink-0 cursor-grab" />
-      <textarea
+      <AutoResizeTextarea
         value={block.content}
         onChange={(e) => onUpdate({ ...block, content: e.target.value })}
         placeholder="Write something beautiful…"
-        rows={3}
         className="flex-1 text-base text-romantic-brown dark:text-dark-text bg-transparent outline-none resize-none placeholder:text-romantic-brown-muted/50 leading-relaxed"
       />
       <button onClick={onRemove} className="p-1.5 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1">

@@ -127,7 +127,7 @@ export function LetterEditorScreen() {
 
       <div className="flex gap-0 max-w-6xl mx-auto">
         {/* Editor area */}
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-8 max-h-[100vh] overflow-y-auto">
           <Input
             placeholder="Letter title…"
             value={title}
