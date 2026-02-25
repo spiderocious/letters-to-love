@@ -54,4 +54,8 @@ export {
   RefreshCw,
   Copy,
   Check,
+  GripVertical,
+  Archive,
+  FileArchive,
+  File,
 } from 'lucide-react'

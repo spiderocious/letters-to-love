@@ -1,6 +1,9 @@
-import { lazy } from 'react'
+import { lazy, createElement } from 'react'
 import type { RouteObject } from 'react-router-dom'
 import { ROUTES } from '@shared/constants'
+import { ReaderLayout } from './features/reader/reader-layout'
+import { AdminLayout } from './features/admin/admin-layout'
+import { AuthGuard } from './features/admin/auth/guards/auth-guard'
 
 const TodayScreen = lazy(() =>
   import('./features/reader/today/screen/today-screen').then((m) => ({ default: m.TodayScreen })),
@@ -17,10 +20,10 @@ const BookmarksScreen = lazy(() =>
 const SearchScreen = lazy(() =>
   import('./features/reader/search/screen/search-screen').then((m) => ({ default: m.SearchScreen })),
 )
-const AdminLoginScreen = lazy(() =>
+const LoginScreen = lazy(() =>
   import('./features/admin/auth/screen/login-screen').then((m) => ({ default: m.LoginScreen })),
 )
-const AdminDashboardScreen = lazy(() =>
+const DashboardScreen = lazy(() =>
   import('./features/admin/dashboard/screen/dashboard-screen').then((m) => ({ default: m.DashboardScreen })),
 )
 const LetterEditorScreen = lazy(() =>
@@ -33,37 +36,33 @@ const MediaManagerScreen = lazy(() =>
   import('./features/admin/media-manager/screen/media-manager-screen').then((m) => ({ default: m.MediaManagerScreen })),
 )
 
-import { AdminLayout } from './features/admin/admin-layout'
-import { ReaderLayout } from './features/reader/reader-layout'
-import { AuthGuard } from './features/admin/auth/guards/auth-guard'
-
 export const routes: RouteObject[] = [
   {
-    element: ReaderLayout,
+    element: createElement(ReaderLayout),
     children: [
-      { path: ROUTES.HOME, element: TodayScreen },
-      { path: ROUTES.LETTER, element: LetterDetailScreen },
-      { path: ROUTES.ARCHIVE, element: ArchiveScreen },
-      { path: ROUTES.BOOKMARKS, element: BookmarksScreen },
-      { path: ROUTES.SEARCH, element: SearchScreen },
+      { path: ROUTES.HOME, element: createElement(TodayScreen) },
+      { path: ROUTES.LETTER, element: createElement(LetterDetailScreen) },
+      { path: ROUTES.ARCHIVE, element: createElement(ArchiveScreen) },
+      { path: ROUTES.BOOKMARKS, element: createElement(BookmarksScreen) },
+      { path: ROUTES.SEARCH, element: createElement(SearchScreen) },
     ],
   },
   {
     path: ROUTES.ADMIN.LOGIN,
-    element: AdminLoginScreen,
+    element: createElement(LoginScreen),
   },
   {
     path: ROUTES.ADMIN.ROOT,
-    element: AuthGuard,
+    element: createElement(AuthGuard),
     children: [
       {
-        element: AdminLayout,
+        element: createElement(AdminLayout),
         children: [
-          { path: ROUTES.ADMIN.DASHBOARD, element: AdminDashboardScreen },
-          { path: ROUTES.ADMIN.LETTER_NEW, element: LetterEditorScreen },
-          { path: ROUTES.ADMIN.LETTER_EDIT, element: LetterEditorScreen },
-          { path: ROUTES.ADMIN.COMMENTS, element: CommentManagerScreen },
-          { path: ROUTES.ADMIN.MEDIA, element: MediaManagerScreen },
+          { path: ROUTES.ADMIN.DASHBOARD, element: createElement(DashboardScreen) },
+          { path: ROUTES.ADMIN.LETTER_NEW, element: createElement(LetterEditorScreen) },
+          { path: ROUTES.ADMIN.LETTER_EDIT, element: createElement(LetterEditorScreen) },
+          { path: ROUTES.ADMIN.COMMENTS, element: createElement(CommentManagerScreen) },
+          { path: ROUTES.ADMIN.MEDIA, element: createElement(MediaManagerScreen) },
         ],
       },
     ],
