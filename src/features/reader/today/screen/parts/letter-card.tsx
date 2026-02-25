@@ -55,7 +55,7 @@ export function LetterCard({ letter, index = 0 }: LetterCardProps) {
         href={letterPath(letter.id)}
         onClick={(e) => {
           e.preventDefault()
-          window.location.href = letterPath(letter.id)
+          navigate(letterPath(letter.id))
         }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
