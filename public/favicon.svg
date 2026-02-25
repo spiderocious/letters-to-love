@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Envelope body -->
+  <rect x="6" y="18" width="52" height="36" rx="5" fill="#F5E6D8"/>
+  <rect x="6" y="18" width="52" height="36" rx="5" stroke="#C4956A" stroke-width="2"/>
+
+  <!-- Envelope flap (open V shape) -->
+  <path d="M6 22 L32 40 L58 22" stroke="#C4956A" stroke-width="2" fill="none" stroke-linejoin="round"/>
+
+  <!-- Envelope fold lines -->
+  <path d="M6 54 L24 38" stroke="#C4956A" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M58 54 L40 38" stroke="#C4956A" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Heart in center -->
+  <path d="M32 34 C32 34 24 27.5 24 23 C24 19.5 26.5 17 29.5 17 C31 17 32 18 32 18 C32 18 33 17 34.5 17 C37.5 17 40 19.5 40 23 C40 27.5 32 34 32 34Z" fill="#E8637A"/>
+
+  <!-- Small sparkle top right -->
+  <circle cx="50" cy="14" r="2" fill="#E8637A" opacity="0.7"/>
+  <circle cx="55" cy="10" r="1.2" fill="#C4956A" opacity="0.6"/>
+  <circle cx="46" cy="10" r="1" fill="#E8637A" opacity="0.5"/>
+</svg>
