@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply font-quicksand;
+  }
+
+  body {
+    @apply bg-romantic-cream text-romantic-brown antialiased;
+  }
+
+  .dark body {
+    @apply bg-dark-bg text-dark-text;
+  }
+}
+
+@layer utilities {
+  .letter-card {
+    @apply bg-white rounded-3xl shadow-card border border-romantic-cream-dark p-6 transition-shadow duration-200 hover:shadow-card-hover;
+  }
+
+  .dark .letter-card {
+    @apply bg-dark-surface border-dark-border;
+  }
+}
