@@ -1,4 +1,4 @@
-import { Trash2, Quote, GripVertical, Image, Video, Music } from '@ui/icons'
+import { Trash2, Quote, GripVertical, Music } from '@ui/icons'
 import type { RichContentBlock } from '@shared/types'
 import { MediaUploader } from './media-uploader'
 import { buildContentBlock } from '../../helpers/build-content-block'

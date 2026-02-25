@@ -1,5 +1,5 @@
-import { Calendar, Star, Trophy } from '@ui/icons'
-import { Input, Select, Badge } from '@ui/components'
+import { Calendar, Trophy } from '@ui/icons'
+import { Select } from '@ui/components'
 import { MOODS } from '@shared/constants'
 import type { LetterMood, LetterStatus } from '@shared/types'
 

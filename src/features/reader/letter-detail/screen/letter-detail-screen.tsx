@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft } from '@ui/icons'
 import { PageSpinner } from '@ui/components'
-import { ROUTES } from '@shared/constants'
+
 import { useLetter, useRandomLetterId, useTrackView } from '../api/use-letter'
 import { LetterCover } from './parts/letter-cover'
 import { RichContentRenderer } from './parts/rich-content-renderer'

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Pencil, Trash2, Eye, Star, Trophy } from '@ui/icons'
+import { Pencil, Trash2, Eye, Trophy } from '@ui/icons'
 import { Badge, Button, Modal } from '@ui/components'
 import { formatShortDate } from '@shared/helpers'
 import { letterEditPath } from '@shared/constants'

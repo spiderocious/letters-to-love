@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, FileText, MessageCircle, Image, LogOut, Plus } from '@ui/icons'
+import { LayoutDashboard, MessageCircle, Image, LogOut, Plus } from '@ui/icons'
 import { Logo, Button } from '@ui/components'
 import { useAdminAuth } from '@shared/utils'
 import { ROUTES } from '@shared/constants'

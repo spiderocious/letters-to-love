@@ -1,5 +1,5 @@
 import type { RichContentBlock } from '@shared/types'
-import { Music, Video } from '@ui/icons'
+import { Music } from '@ui/icons'
 
 interface RichContentRendererProps {
   blocks: RichContentBlock[]
