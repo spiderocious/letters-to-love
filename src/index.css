@@ -7,6 +7,10 @@
     @apply font-quicksand;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-romantic-cream text-romantic-brown antialiased;
   }
@@ -23,5 +27,56 @@
 
   .dark .letter-card {
     @apply bg-dark-surface border-dark-border;
+  }
+
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Drop cap for first text block in letter content */
+  .drop-cap::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5em;
+    font-weight: 700;
+    line-height: 0.75;
+    float: left;
+    margin-right: 0.1em;
+    margin-top: 0.05em;
+    color: #E87080;
+  }
+
+  /* Split-flap digit container */
+  .flip-digit-wrapper {
+    perspective: 400px;
+    display: inline-block;
+  }
+
+  /* Page transition wrapper */
+  .page-transition {
+    will-change: transform, opacity;
+  }
+
+  /* Floating hearts */
+  .floating-heart {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+/* View transition for theme toggle — circular wipe */
+::view-transition-new(root) {
+  animation: reveal-circle 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  clip-path: circle(0% at var(--toggle-x, 50%) var(--toggle-y, 50%));
+}
+
+::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+@keyframes reveal-circle {
+  to {
+    clip-path: circle(150% at var(--toggle-x, 50%) var(--toggle-y, 50%));
   }
 }

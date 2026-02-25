@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import type { RichContentBlock } from '@shared/types'
 import { Music } from '@ui/icons'
 
@@ -5,9 +6,14 @@ interface RichContentRendererProps {
   blocks: RichContentBlock[]
 }
 
-function TextBlock({ block }: { block: RichContentBlock }) {
+const revealVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+}
+
+function TextBlock({ block, isFirst }: { block: RichContentBlock; isFirst: boolean }) {
   return (
-    <p className="text-base leading-8 text-romantic-brown dark:text-dark-text whitespace-pre-wrap">
+    <p className={`text-lg leading-9 text-romantic-brown dark:text-dark-text whitespace-pre-wrap ${isFirst ? 'drop-cap' : ''}`}>
       {block.content}
     </p>
   )
@@ -16,8 +22,15 @@ function TextBlock({ block }: { block: RichContentBlock }) {
 function QuoteBlock({ block }: { block: RichContentBlock }) {
   return (
     <blockquote className="flex gap-4 my-2">
-      <div className="w-1 bg-brand-yellow rounded-full shrink-0" />
-      <p className="text-lg italic text-romantic-brown-light dark:text-dark-muted leading-relaxed">
+      <motion.div
+        initial={{ scaleY: 0 }}
+        whileInView={{ scaleY: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+        className="w-1 bg-brand-yellow rounded-full shrink-0"
+        style={{ transformOrigin: 'top' }}
+      />
+      <p className="font-display text-xl italic text-romantic-brown-light dark:text-dark-muted leading-relaxed">
         {block.content}
       </p>
     </blockquote>
@@ -75,17 +88,29 @@ export function RichContentRenderer({ blocks }: RichContentRendererProps) {
     )
   }
 
+  let textBlockIndex = 0
+
   return (
     <div className="flex flex-col gap-6">
       {blocks.map((block) => {
-        switch (block.type) {
-          case 'text': return <TextBlock key={block.id} block={block} />
-          case 'quote': return <QuoteBlock key={block.id} block={block} />
-          case 'image': return <ImageBlock key={block.id} block={block} />
-          case 'video': return <VideoBlock key={block.id} block={block} />
-          case 'audio': return <AudioBlock key={block.id} block={block} />
-          default: return null
-        }
+        const isFirstText = block.type === 'text' && textBlockIndex === 0
+        if (block.type === 'text') textBlockIndex++
+
+        return (
+          <motion.div
+            key={block.id}
+            variants={revealVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+          >
+            {block.type === 'text' && <TextBlock block={block} isFirst={isFirstText} />}
+            {block.type === 'quote' && <QuoteBlock block={block} />}
+            {block.type === 'image' && <ImageBlock block={block} />}
+            {block.type === 'video' && <VideoBlock block={block} />}
+            {block.type === 'audio' && <AudioBlock block={block} />}
+          </motion.div>
+        )
       })}
     </div>
   )

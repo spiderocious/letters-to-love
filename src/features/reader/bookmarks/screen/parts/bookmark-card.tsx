@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import { BookmarkCheck, Trophy, Heart, Trash2 } from '@ui/icons'
+import { Trophy, Heart, Trash2 } from '@ui/icons'
 import { Badge } from '@ui/components'
 import { formatShortDate } from '@shared/helpers'
 import { letterPath } from '@shared/constants'
-import { useToggleBookmark } from '../../letter-detail/api/use-bookmark'
-import type { BookmarkWithLetter } from '../api/use-bookmarks'
+import { useToggleBookmark } from '@features/reader/letter-detail/api/use-bookmark'
+import type { BookmarkWithLetter } from '@features/reader/bookmarks/api/use-bookmarks'
 
 interface BookmarkCardProps {
   bookmark: BookmarkWithLetter

@@ -1,8 +1,27 @@
+import { motion } from 'framer-motion'
 import { PageSpinner } from '@ui/components'
 import { useTodayLetters } from '../api/use-today-letters'
 import { TodayHeader } from './parts/today-header'
 import { LetterCard } from './parts/letter-card'
 import { CountdownTimer } from './parts/countdown-timer'
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring' as const, stiffness: 260, damping: 20 },
+  },
+}
 
 export function TodayScreen() {
   const { data: letters, isLoading, error } = useTodayLetters()
@@ -10,7 +29,7 @@ export function TodayScreen() {
   if (isLoading) return <PageSpinner />
 
   return (
-    <div className="animate-fade-in">
+    <div>
       <TodayHeader />
 
       {error && (
@@ -22,11 +41,18 @@ export function TodayScreen() {
       )}
 
       {letters && letters.length > 0 && (
-        <div className="flex flex-col gap-5">
+        <motion.div
+          className="flex flex-col gap-5"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {letters.map((letter, i) => (
-            <LetterCard key={letter.id} letter={letter} index={i} />
+            <motion.div key={letter.id} variants={cardVariants}>
+              <LetterCard letter={letter} index={i} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   )

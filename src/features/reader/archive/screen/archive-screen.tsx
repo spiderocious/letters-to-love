@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Archive, Flame } from '@ui/icons'
 import { PageSpinner, EmptyState, Badge } from '@ui/components'
 import { isSameDay } from '@shared/helpers'
@@ -13,15 +14,35 @@ import { formatDate } from '@shared/helpers'
 interface TimelineGroupProps {
   date: string
   letters: LetterSummary[]
+  index: number
 }
 
-function TimelineGroup({ date, letters }: TimelineGroupProps) {
+function TimelineGroup({ date, letters, index }: TimelineGroupProps) {
   return (
-    <div className="flex gap-4">
-      {/* Timeline dot */}
+    <motion.div
+      className="flex gap-4"
+      initial={{ opacity: 0, x: -16 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.4, delay: index * 0.06, ease: 'easeOut' }}
+    >
+      {/* Timeline dot + line */}
       <div className="flex flex-col items-center pt-1.5">
-        <div className="w-3 h-3 rounded-full bg-romantic-rose shrink-0" />
-        <div className="w-px flex-1 bg-romantic-cream-dark dark:bg-dark-border mt-1" />
+        <motion.div
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20, delay: index * 0.06 + 0.1 }}
+          className="w-3 h-3 rounded-full bg-romantic-rose shrink-0"
+        />
+        <motion.div
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: index * 0.06 + 0.2, ease: 'easeOut' }}
+          className="w-px flex-1 bg-romantic-cream-dark dark:bg-dark-border mt-1"
+          style={{ transformOrigin: 'top' }}
+        />
       </div>
 
       <div className="flex-1 pb-6">
@@ -53,7 +74,7 @@ function TimelineGroup({ date, letters }: TimelineGroupProps) {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -74,18 +95,23 @@ export function ArchiveScreen() {
   }
 
   return (
-    <div className="animate-fade-in">
-      <div className="mb-8">
+    <div>
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="mb-8"
+      >
         <div className="flex items-center gap-2 mb-1">
           <Archive size={20} className="text-romantic-rose" />
-          <h1 className="text-2xl font-bold text-romantic-brown dark:text-dark-text">Archive</h1>
+          <h1 className="font-display italic text-3xl font-bold text-romantic-brown dark:text-dark-text">Archive</h1>
         </div>
         {letters && (
           <p className="text-sm text-romantic-brown-muted dark:text-dark-muted">
             {letters.length} letter{letters.length !== 1 ? 's' : ''} written
           </p>
         )}
-      </div>
+      </motion.div>
 
       <div className="mb-6">
         <ArchiveFilters activeMood={activeMood} onMoodChange={setActiveMood} />
@@ -103,8 +129,8 @@ export function ArchiveScreen() {
       )}
 
       <div className="flex flex-col">
-        {groups.map((group) => (
-          <TimelineGroup key={group.date} date={group.date} letters={group.letters} />
+        {groups.map((group, i) => (
+          <TimelineGroup key={group.date} date={group.date} letters={group.letters} index={i} />
         ))}
       </div>
     </div>
